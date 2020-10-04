@@ -1,5 +1,8 @@
+import uvicorn
+
 from fastapi import FastAPI
 from users import routes as users
+
 
 app = FastAPI(
     title='FastAPI - Example API',
@@ -12,8 +15,12 @@ app.include_router(
     prefix='/users',
     tags=['Users'],
     responses={
-        404: {'description': 'Não encontrado'},
-        403: {'description': 'Acesso Negado'}
+        200: {'description': 'OK'},
+        201: {'description': 'Created'},
+        202: {'description': 'Accepted'},
+        204: {'description': 'No Content'},
+        403: {'description': 'Forbidden'},
+        404: {'description': 'Not found'}
     }
 )
 
@@ -22,3 +29,6 @@ app.include_router(
 def root():
     return {'msg': 'Hello World!'}
 
+
+if __name__ == "__main__":
+    uvicorn.run(app, host='0.0.0.0', port=8000, log_level='info')
