@@ -5,24 +5,32 @@ O que faz: tomada/plugin da aplicação
 """
 
 from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 from users import models
+from users import services
+
 
 user_routes = APIRouter()
 
-@user_routes.get('/')
+@user_routes.get('/', response_model=models.UserResponse)
 async def get_all_users():
-    return {'msg': 'Return all users.'}
+    res = await services.find_all()
+    return JSONResponse(content=res)
 
-@user_routes.get('/{id_user}')
+@user_routes.get('/{id_user}', response_model=models.UserResponse)
 async def get_user(id_user: int):
-    return {'msg': 'Return userID: {}'.format(id_user)}
+    res = await services.find_one(id_user)
+    return JSONResponse(content=res)
 
-@user_routes.post('/')
+@user_routes.post('/', response_model=models.UserId)
 async def create_user(body: models.CreateUserRequest):
-    return {'msg': 'Create user with payload'}
+    res = await services.create_user(body)
+
+    return JSONResponse(content=res, status_code=201)
 
 @user_routes.delete('/{id_user}')
 async def delete_user(id_user: int):
+    res = 
     return {'msg': 'Delete userID: {}'.format(id_user)}
 
 @user_routes.put('/{id_user}')
