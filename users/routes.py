@@ -30,7 +30,6 @@ async def create_user(body: models.CreateUserRequest):
 
 @user_routes.delete('/{id_user}')
 async def delete_user(id_user: int):
-    res = 
     return {'msg': 'Delete userID: {}'.format(id_user)}
 
 @user_routes.put('/{id_user}')
