@@ -30,8 +30,12 @@ async def create_user(body: models.CreateUserRequest):
 
 @user_routes.delete('/{id_user}')
 async def delete_user(id_user: int):
-    return {'msg': 'Delete userID: {}'.format(id_user)}
+    await services.delete_user(id_user)
+
+    return JSONResponse(status_code=202)
 
 @user_routes.put('/{id_user}')
-async def update_user(id_user: int, body: models.UpdateUserRequest):
-    return {'msg': 'Update userID: {}'.format(id_user)}
+async def update_user(id_user: int, payload: models.UpdateUserRequest):
+    await services.update_user(id_user, payload)
+
+    return JSONResponse(status_code=200)

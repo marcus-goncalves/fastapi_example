@@ -13,9 +13,9 @@ class CreateUserRequest(BaseModel):
     area: Optional[str] = None
 
 class UpdateUserRequest(BaseModel):
-    name: Optional[str]
-    password: Optional[str]
-    area: Optional[str] = None
+    name: str
+    password: str
+    area: str
 
 class UserResponse(BaseModel):
     id: int

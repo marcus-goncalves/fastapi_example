@@ -25,3 +25,14 @@ async def find_one(id_user):
 async def create_user(payload):
     res = await entities.create(payload)
     return res
+
+async def delete_user(id_user):
+    res = await entities.delete(id_user)
+    return res
+
+async def update_user(id_user, payload):
+    new_values = list(dict(payload).values())
+    new_values.append(id_user)
+
+    await entities.update(new_values)
+    return 'ok'

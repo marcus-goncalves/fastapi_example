@@ -41,7 +41,34 @@ async def create(payload):
     data = list(dict(payload).values())
     query = 'INSERT INTO users (name, password, occupation, area) VALUES (?, ?, ?, ?)'
     res = cur.execute(query, data).lastrowid
+    conn.commit()
 
     conn.close()
 
     return {'id': res}
+
+async def delete(id_user):
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+
+        query = 'DELETE FROM users WHERE id = {}'.format(id_user)
+        res = cur.execute(query).lastrowid
+        conn.commit()
+        return {'id': res}
+    except:
+        HTTPException(status_code=404)
+
+async def update(new_values):
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+
+        query = """UPDATE users SET name = ?, password = ?, area = ? WHERE id = ?"""
+        cur.execute(query, new_values)
+        conn.commit()
+
+        return 'ok'
+    except:
+        print('deu ruim')
+        HTTPException(status_code=403)
